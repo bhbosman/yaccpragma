@@ -1,0 +1,106 @@
+
+state 0
+	$accept: .pragma_spec $end 
+
+	RwPragma  shift 2
+	.  error
+
+	pragma_spec  goto 1
+
+state 1
+	$accept:  pragma_spec.$end 
+
+	$end  accept
+	.  error
+
+
+state 2
+	pragma_spec:  RwPragma.RwId Identifier StringLiteral 
+	pragma_spec:  RwPragma.RwPrefix StringLiteral 
+	pragma_spec:  RwPragma.RwVersion Identifier IntLiteral '.' IntLiteral 
+
+	RwPrefix  shift 4
+	RwId  shift 3
+	RwVersion  shift 5
+	.  error
+
+
+state 3
+	pragma_spec:  RwPragma RwId.Identifier StringLiteral 
+
+	Identifier  shift 6
+	.  error
+
+
+state 4
+	pragma_spec:  RwPragma RwPrefix.StringLiteral 
+
+	StringLiteral  shift 7
+	.  error
+
+
+state 5
+	pragma_spec:  RwPragma RwVersion.Identifier IntLiteral '.' IntLiteral 
+
+	Identifier  shift 8
+	.  error
+
+
+state 6
+	pragma_spec:  RwPragma RwId Identifier.StringLiteral 
+
+	StringLiteral  shift 9
+	.  error
+
+
+state 7
+	pragma_spec:  RwPragma RwPrefix StringLiteral.    (2)
+
+	.  reduce 2 (src line 51)
+
+
+state 8
+	pragma_spec:  RwPragma RwVersion Identifier.IntLiteral '.' IntLiteral 
+
+	IntLiteral  shift 10
+	.  error
+
+
+state 9
+	pragma_spec:  RwPragma RwId Identifier StringLiteral.    (1)
+
+	.  reduce 1 (src line 26)
+
+
+state 10
+	pragma_spec:  RwPragma RwVersion Identifier IntLiteral.'.' IntLiteral 
+
+	'.'  shift 11
+	.  error
+
+
+state 11
+	pragma_spec:  RwPragma RwVersion Identifier IntLiteral '.'.IntLiteral 
+
+	IntLiteral  shift 12
+	.  error
+
+
+state 12
+	pragma_spec:  RwPragma RwVersion Identifier IntLiteral '.' IntLiteral.    (3)
+
+	.  reduce 3 (src line 60)
+
+
+12 terminals, 2 nonterminals
+4 grammar rules, 13/8000 states
+0 shift/reduce, 0 reduce/reduce conflicts reported
+51 working sets used
+memory: parser 0/120000
+0 extra closures
+11 shift entries, 1 exceptions
+1 goto entries
+0 entries saved by goto default
+Optimizer space used: output 12/120000
+12 table entries, 0 zero
+maximum spread: 12, maximum offset: 12
